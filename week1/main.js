@@ -1,22 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-fs.open(process.argv[3], 'r', (err, fd) => {
+fs.open(path.join(__dirname, process.argv[3]), 'r', (err, fd) => {
   if (err) {
-    if (err.code === 'ENOENT') {
-      const data = new Uint8Array(Buffer.from(process.argv[2]));
-      fs.writeFile(process.argv[3], data, err => {
-        if (err) throw err;
-        console.log('The new file has been saved');
-      });
-
-      return;
-    }
+    const data = new Uint8Array(Buffer.from(process.argv[2]));
+    fs.writeFile(process.argv[3], data, err => {
+      if (err) throw err;
+      console.log('The new file has been saved');
+    });
   } else {
     fs.unlink(process.argv[3], err => {
       if (err) {
         throw err;
       } else {
-        fs.unlink(process.argv[3], (err, data) => {
+        fs.unlink(path.join(__dirname, process.argv[3]), (err, data) => {
           console.log('The file has been deleted');
         });
       }
