@@ -1,0 +1,4 @@
+- Create a folder for your application
+- Initialise the folder using npm init
+- Install a module (moment) using npm install
+- require the moment package and use it to display the date using the following format: 23/06/2019 13:32
