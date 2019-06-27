@@ -1,0 +1,19 @@
+{
+  "name": "week2",
+  "version": "1.0.0",
+  "description": "week2_assignment",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main"
+  },
+  "keywords": [
+    "express",
+    "nodemon"
+  ],
+  "author": "codelawer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
