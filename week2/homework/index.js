@@ -25,14 +25,16 @@ const port = 3000;
 // The variable `posts` is an array which stores all the posts.
 // Right now, it only adds
 const posts = [
-  { id: '3', title: 'Title of the post', text: 'Content of the post.' },
+  { id: '1', title: 'Title of the post 1', text: 'Content of the post 1.' },
+  { id: '2', title: 'Title of the post 2', text: 'Content of the post 2' },
+  { id: '3', title: 'Title of the post 3', text: 'Content of the post 3.' }
 ];
 
 // If you navigate to http://localhost:3000/, it will respond with the string 'Hello World!'
 app.get('/', (req, res) => {
   console.log('Responding with `Hello World!`');
 
-  res.send('Hello World!');
+  res.send('Hello world!');
 });
 
 // If you navigate to http://localhost:3000/hello-2, it will respond with the string 'Hello World 2!'
@@ -56,20 +58,40 @@ app.get('/hello/:name', (req, res) => {
 
   res.send(`Hello ${name}!`);
 });
-
+const postsArr = () => {
+  console.log("array");
+}
 // This is the GET /posts route
 app.get('/posts', (req, res) => {
   console.log('sending posts...');
+  const logListPosts = () => {
+    const mapPost = posts.map(post => `<li id="${post.id}"><h1>${post.title}</h1><p>${post.text}</p></li>`).join("");
+    return mapPost;
+  }
+  const logPosts = () => {
+    return `<div><h1>All Posts!!</h1><ul>${logListPosts()}</ul></div>`;
+  };
 
   // Right now, we just returning the "sending posts..." string. We should this so that we return the `posts` array that we defined above.
-  res.send('sending posts...');
+  res.send(logPosts());
 });
 
 //
 // You can add the other two routes here
 // 1. "GET /posts/:postId"
+app.get('/posts/:postId', (req, res) => {
+  console.log(req.params.postId);
+  var paramId = req.params.postId;
+  var found = posts.find(post => {
+    return post.id === paramId;
+  });
+  const foundHTML = `<h1>${found.title}</h1><p>${found.text}</p>`
+  return res.send(foundHTML);
+});
 // 2. "GET /posts/:postId/delete"
-//
+app.get('/posts/:postId/delete', function (req, res) {
+  res.send('DELETE request to homepage')
+})
 
 // This starts the web server
 app.listen(port, () =>
