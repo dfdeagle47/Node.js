@@ -25,14 +25,16 @@ const port = 3000;
 // The variable `posts` is an array which stores all the posts.
 // Right now, it only adds
 const posts = [
-  { id: '3', title: 'Title of the post', text: 'Content of the post.' },
+  { id: '1', title: 'Title of the post', text: 'Content of the post.' },
+  { id: '2', title: 'Title of the post', text: 'Content of the post.' },
+  { id: '3', title: 'Title of the post', text: 'Content of the post.' }
 ];
 
 // If you navigate to http://localhost:3000/, it will respond with the string 'Hello World!'
 app.get('/', (req, res) => {
   console.log('Responding with `Hello World!`');
 
-  res.send('Hello World!');
+  res.send('Hello World! how are you?');
 });
 
 // If you navigate to http://localhost:3000/hello-2, it will respond with the string 'Hello World 2!'
@@ -68,8 +70,29 @@ app.get('/posts', (req, res) => {
 //
 // You can add the other two routes here
 // 1. "GET /posts/:postId"
+
+app.get('/posts/:postId', (req, res) => {
+  console.log(req.params.postId);
+  var paramId = req.params.postId;
+  if (paramId > 0 && paramId <= posts.length) { //chech if entered postid value exist in posts array.
+    var wantedPost = posts.find(post => {
+      return post.id === paramId;
+      });
+    const foundHTML = `<h1>${wantedPost.title}</h1><p>${wantedPost.text}</p>`
+    return res.send(foundHTML);
+  } else {
+    res.status(400).json({ mssg: 'Post Number: ' + req.params.postId + ' does not exist!' });
+  } 
+});
 // 2. "GET /posts/:postId/delete"
-//
+app.get('/posts/:postId/delete', (req,res) => {
+  console.log('post number ' + req.params.postId + ' will be deleted');
+  var toDelete = req.params.postId - 1; //to be used in splice
+  posts.splice(toDelete, 1);
+  return res.send('post number ' + req.params.postId + ' is deleted');
+  console.log('post number ' + req.params.postId + ' is deleted');
+})
+
 
 // This starts the web server
 app.listen(port, () =>
