@@ -104,8 +104,4 @@ app.delete("/posts/:postId", (req, res) => {
 //
 
 // This starts the web server
-app.listen(port, () =>
-  console.log(
-    `Example app listening on port ${port}!\nYou can access the base route by going to http://localhost:${port}/ in your browser.`
-  )
-);
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
