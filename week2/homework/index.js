@@ -26,6 +26,9 @@ const port = 3000;
 // Right now, it only adds
 const posts = [
   { id: '3', title: 'Title of the post', text: 'Content of the post.' },
+  { id: '1', title: 'Title1', text: 'content1'},
+  { id: '2', title: 'Title2', text: 'content2'},
+  { id: '3', title: 'Title3', text: 'content3'},
 ];
 
 // If you navigate to http://localhost:3000/, it will respond with the string 'Hello World!'
@@ -62,15 +65,24 @@ app.get('/posts', (req, res) => {
   console.log('sending posts...');
 
   // Right now, we just returning the "sending posts..." string. We should this so that we return the `posts` array that we defined above.
-  res.send('sending posts...');
+  res.send(posts);
 });
 
 //
 // You can add the other two routes here
 // 1. "GET /posts/:postId"
+app.get('/posts/:postId', function (req,res) {
+ const get = req.params.postId;
+  console.log(`get the ${postId} of posts`);
+ res.send(`${postId}`);
+})
 // 2. "GET /posts/:postId/delete"
 //
-
+app.delete('/posts/:postId/delete', function (req,res){
+ const deleted = req.params.postId;
+  console.log(`delete the ${postId} of posts`);
+  res.send(`${postId}`);
+})
 // This starts the web server
 app.listen(port, () =>
   console.log(
