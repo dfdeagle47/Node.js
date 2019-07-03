@@ -27,7 +27,7 @@ const port = 3000;
 const posts = [
   { id: '3', title: 'Title of the post', text: 'Content of the post.' },
 ];
-
+const obj = posts[0];
 // If you navigate to http://localhost:3000/, it will respond with the string 'Hello World!'
 app.get('/', (req, res) => {
   console.log('Responding with `Hello World!`');
@@ -68,8 +68,16 @@ app.get('/posts', (req, res) => {
 //
 // You can add the other two routes here
 // 1. "GET /posts/:postId"
+app.get('/posts/:postId', (req, res) => {
+  console.log(obj);
+  return res.send(obj.id);
+});
 // 2. "GET /posts/:postId/delete"
-//
+app.get('/posts/:postId/delete', (req, res) => {
+  const delParam = req.params.delete
+  console.log('nothing');
+  return res.send('the item has been deleted');
+});
 
 // This starts the web server
 app.listen(port, () =>
