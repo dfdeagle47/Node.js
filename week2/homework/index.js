@@ -59,21 +59,28 @@ app.get('/hello/:name', (req, res) => {
 
 // This is the GET /posts route
 app.get('/posts', (req, res) => {
-  console.log('sending posts...');
+    console.log('sending posts...');
 
-  // Right now, we just returning the "sending posts..." string. We should this so that we return the `posts` array that we defined above.
-  res.send('sending posts...');
+    // 1 =>
+    res.send(posts);
 });
 
-//
-// You can add the other two routes here
-// 1. "GET /posts/:postId"
-// 2. "GET /posts/:postId/delete"
-//
+app.get('/posts/:postId', (req, res) => {
+    console.log('req.params.postId');
+
+    // 2 =>
+    return res.send('Get value:' + req.params.postId);
+});
+app.delete('/posts/delete/:postId', (req, res) => {
+    console.log('req.params.postId.delete');
+
+    // 3 =>
+    return res.send('going to delete:' + req.params.postId);
+});
 
 // This starts the web server
 app.listen(port, () =>
-  console.log(
-    `Example app listening on port ${port}!\nYou can access the base route by going to http://localhost:${port}/ in your browser.`
-  )
+    console.log(
+        `Example app listening on port ${port}!\nYou can access the base route by going to http://localhost:${port}/ in your browser.`
+    )
 );
