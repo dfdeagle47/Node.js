@@ -26,6 +26,21 @@ const port = 3000;
 // Right now, it only adds
 const posts = [
   { id: '3', title: 'Title of the post', text: 'Content of the post.' },
+  {
+    id: "1",
+    title: "Title of the id1",
+    text: "Content of the id1."
+  },
+  {
+    id: "2",
+    title: "Title of the id2",
+    text: "Content of the id2."
+  },
+  {
+    id: "3",
+    title: "Title of the id3",
+    text: "Content of the id3."
+  }
 ];
 
 // If you navigate to http://localhost:3000/, it will respond with the string 'Hello World!'
@@ -58,22 +73,35 @@ app.get('/hello/:name', (req, res) => {
 });
 
 // This is the GET /posts route
-app.get('/posts', (req, res) => {
-  console.log('sending posts...');
-
-  // Right now, we just returning the "sending posts..." string. We should this so that we return the `posts` array that we defined above.
-  res.send('sending posts...');
-});
+app.get("/posts", (req, res) => res.send(posts));
 
 //
 // You can add the other two routes here
 // 1. "GET /posts/:postId"
+app.get("/posts/:postId", (req, res) => {
+  console.log(req.params.postId);
+  var filter = posts.filter(post => {
+    return post.id === req.params.postId;
+  });
+  console.log(filter);
+  return res.send(filter);
+});
 // 2. "GET /posts/:postId/delete"
+app.get("/posts/:postId/delete", (req, res) => {
+  console.log("deleting postId...");
+  console.log(req.params.postId);
+
+  return res.send("Got some value:" + req.params.postId);
+});
+app.delete("/posts/:postId", (req, res) => {
+  console.log(req.params.postId);
+  var deleted = posts.filter(post => {
+    return post.id === req.params.postId;
+  });
+  console.log(deleted);
+  return res.send(deleted);
+});
 //
 
 // This starts the web server
-app.listen(port, () =>
-  console.log(
-    `Example app listening on port ${port}!\nYou can access the base route by going to http://localhost:${port}/ in your browser.`
-  )
-);
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
